@@ -1,5 +1,5 @@
 // ================================================================
-// ES 335: Used Car Valuation Calculator & Test Predictions Explorer
+// ES 335: Heuristic Calculator + Real XGBoost Test Set Explorer
 // ================================================================
 
 let allTestPredictions = [];
@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
   loadTestPredictions();
 });
 
-// 1. Valuation Calculator
 function updateValuation() {
   const brand = document.getElementById("v_brand").value;
   const age = parseInt(document.getElementById("v_age").value);
@@ -21,6 +20,7 @@ function updateValuation() {
   document.getElementById("disp_age").textContent = `${age} yrs`;
   document.getElementById("disp_miles").textContent = `${miles.toLocaleString('en-US')} mi`;
 
+  // Heuristic baselines — NOT the trained model
   let basePrice = 28000;
   if (brand === "mid") basePrice = 48000;
   if (brand === "luxury") basePrice = 75000;
@@ -40,13 +40,15 @@ function updateValuation() {
   estimated = Math.max(1800, Math.round(estimated / 50) * 50);
 
   document.getElementById("calc_price").textContent = `$${estimated.toLocaleString('en-US')}`;
-  document.getElementById("calc_range").textContent = `XGBoost test residual spread, for reference: −$28,985 to +$35,179`;
+  document.getElementById("calc_range").textContent =
+    `XGBoost test residuals (5th–95th pct): −$28,985 to +$35,179`;
 
   document.getElementById("bd_base").textContent = `$${basePrice.toLocaleString('en-US')}`;
   document.getElementById("bd_age").textContent = `-$${Math.round(ageLoss).toLocaleString('en-US')}`;
   document.getElementById("bd_miles").textContent = `-$${Math.round(mileageLoss).toLocaleString('en-US')}`;
-  document.getElementById("bd_acc").textContent = accidentLoss > 0 ? `-$${Math.round(accidentLoss).toLocaleString('en-US')}` : "$0";
-  
+  document.getElementById("bd_acc").textContent = accidentLoss > 0
+    ? `-$${Math.round(accidentLoss).toLocaleString('en-US')}` : "$0";
+
   if (powertrainMod >= 0) {
     document.getElementById("bd_powertrain").textContent = `+$${powertrainMod.toLocaleString('en-US')}`;
     document.getElementById("bd_powertrain").parentElement.className = "breakdown-row green-text";
@@ -57,7 +59,6 @@ function updateValuation() {
 
   const lowBound = Math.max(2000, Math.round(estimated - 28985));
   const highBound = Math.round(estimated + 35179);
-
   const leftPct = Math.min(95, Math.max(0, ((lowBound - 2000) / 98000) * 100));
   const rightPct = Math.min(100, Math.max(5, ((highBound - 2000) / 98000) * 100));
   const dotPct = Math.min(98, Math.max(2, ((estimated - 2000) / 98000) * 100));
@@ -93,17 +94,16 @@ function loadPreset(type) {
   updateValuation();
 }
 
-// 2. Second Interaction: Interactive Test Predictions Explorer
 async function loadTestPredictions() {
   try {
     const res = await fetch("results/test_predictions.json");
-    if (!res.ok) throw new Error("Local load fallback");
+    if (!res.ok) throw new Error("fetch failed");
     allTestPredictions = await res.json();
     renderPredictionsTable(allTestPredictions);
   } catch (err) {
-    // Embedded sample fallback if loaded locally via file://
     const tbody = document.getElementById("test-table-body");
-    if (tbody) tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#888;">Could not load data — showing sample predictions.</td></tr>';
+    if (tbody) tbody.innerHTML =
+      '<tr><td colspan="7" style="text-align:center;color:#888;">Could not load data — showing sample predictions.</td></tr>';
     allTestPredictions = [
       {"brand_clean":"Ford","car_age":18,"milage":64500,"band":"<20k","y":16000,"p":18887.2,"abs_err":2887.2,"pct_err":18.0},
       {"brand_clean":"BMW","car_age":10,"milage":74850,"band":"20-40k","y":21900,"p":25155.5,"abs_err":3255.5,"pct_err":14.9},
@@ -124,27 +124,21 @@ function filterTestPredictions(band) {
   const buttons = document.querySelectorAll(".preset-row .btn-preset");
   buttons.forEach(btn => btn.classList.remove("active"));
   event.target.classList.add("active");
-
-  if (band === "all") {
-    renderPredictionsTable(allTestPredictions);
-  } else {
-    const filtered = allTestPredictions.filter(item => item.band === band);
-    renderPredictionsTable(filtered);
-  }
+  const filtered = band === "all"
+    ? allTestPredictions
+    : allTestPredictions.filter(item => item.band === band);
+  renderPredictionsTable(filtered);
 }
 
 function renderPredictionsTable(data) {
   const tbody = document.getElementById("test-table-body");
   if (!tbody) return;
-  tbody.innerHTML = "";
-
   if (data.length === 0) {
     tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#888;">No results for this filter.</td></tr>';
     return;
   }
-
-  const displayData = data.slice(0, 50);
-  displayData.forEach(row => {
+  tbody.innerHTML = "";
+  data.slice(0, 50).forEach(row => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
       <td>${row.brand_clean}</td>
