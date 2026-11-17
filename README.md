@@ -3,8 +3,8 @@
 **Author:** Gouru Prakarsha (Roll No: 25110121)  
 **Institution:** Indian Institute of Technology Gandhinagar  
 
-🌐 **Live Project Website:** [https://gouruprakarsha-pixel.github.io/used-car-price-project/](https://gouruprakarsha-pixel.github.io/used-car-price-project/)  
-📂 **Source Code Repository:** [https://github.com/gouruprakarsha-pixel/used-car-price-project](https://github.com/gouruprakarsha-pixel/used-car-price-project)
+🌐 **Live Project Website:** [https://gouruprakarsha-pixel.github.io/Used-car-price-project/](https://gouruprakarsha-pixel.github.io/Used-car-price-project/)  
+📂 **Source Code Repository:** [https://github.com/gouruprakarsha-pixel/Used-car-price-project](https://github.com/gouruprakarsha-pixel/Used-car-price-project)
 
 ---
 
@@ -33,8 +33,8 @@ To reproduce all experiments, data processing, and figures:
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/gouruprakarsha-pixel/used-car-price-project.git
-   cd used-car-price-project
+   git clone https://github.com/gouruprakarsha-pixel/Used-car-price-project.git
+   cd Used-car-price-project
    ```
 
 2. Install dependencies:
@@ -47,7 +47,7 @@ To reproduce all experiments, data processing, and figures:
 
 ## 5. Repository Structure
 ```text
-used-car-price-project/
+Used-car-price-project/
 ├── index.html              # Main live interactive website
 ├── style.css               # Clean aesthetic cream/white styling
 ├── app.js                  # Client-side valuation calculator & scale meter
