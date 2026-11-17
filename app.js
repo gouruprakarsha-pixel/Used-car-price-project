@@ -21,7 +21,7 @@ function updateValuation() {
   document.getElementById("disp_age").textContent = `${age} yrs`;
   document.getElementById("disp_miles").textContent = `${miles.toLocaleString('en-US')} mi`;
 
-  let basePrice = 34000;
+  let basePrice = 28000;
   if (brand === "mid") basePrice = 48000;
   if (brand === "luxury") basePrice = 75000;
 
@@ -39,12 +39,8 @@ function updateValuation() {
   let estimated = basePrice - ageLoss - mileageLoss - accidentLoss + powertrainMod;
   estimated = Math.max(1800, Math.round(estimated / 50) * 50);
 
-  // 5th to 95th percentile residual span (-$28,985 to +$35,179)
-  const lowBound = Math.max(1000, Math.round(estimated - 28985));
-  const highBound = Math.round(estimated + 35179);
-
   document.getElementById("calc_price").textContent = `$${estimated.toLocaleString('en-US')}`;
-  document.getElementById("calc_range").textContent = `Typical residual range (5th–95th percentile): -$28,985 to +$35,179`;
+  document.getElementById("calc_range").textContent = `XGBoost test residual spread, for reference: −$28,985 to +$35,179`;
 
   document.getElementById("bd_base").textContent = `$${basePrice.toLocaleString('en-US')}`;
   document.getElementById("bd_age").textContent = `-$${Math.round(ageLoss).toLocaleString('en-US')}`;
@@ -58,6 +54,9 @@ function updateValuation() {
     document.getElementById("bd_powertrain").textContent = `-$${Math.abs(powertrainMod).toLocaleString('en-US')}`;
     document.getElementById("bd_powertrain").parentElement.className = "breakdown-row red-text";
   }
+
+  const lowBound = Math.max(2000, Math.round(estimated - 28985));
+  const highBound = Math.round(estimated + 35179);
 
   const leftPct = Math.min(95, Math.max(0, ((lowBound - 2000) / 98000) * 100));
   const rightPct = Math.min(100, Math.max(5, ((highBound - 2000) / 98000) * 100));
@@ -103,6 +102,8 @@ async function loadTestPredictions() {
     renderPredictionsTable(allTestPredictions);
   } catch (err) {
     // Embedded sample fallback if loaded locally via file://
+    const tbody = document.getElementById("test-table-body");
+    if (tbody) tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#888;">Could not load data — showing sample predictions.</td></tr>';
     allTestPredictions = [
       {"brand_clean":"Ford","car_age":18,"milage":64500,"band":"<20k","y":16000,"p":18887.2,"abs_err":2887.2,"pct_err":18.0},
       {"brand_clean":"BMW","car_age":10,"milage":74850,"band":"20-40k","y":21900,"p":25155.5,"abs_err":3255.5,"pct_err":14.9},
@@ -137,7 +138,12 @@ function renderPredictionsTable(data) {
   if (!tbody) return;
   tbody.innerHTML = "";
 
-  const displayData = data.slice(0, 50); // Fast smooth rendering for 50 rows
+  if (data.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#888;">No results for this filter.</td></tr>';
+    return;
+  }
+
+  const displayData = data.slice(0, 50);
   displayData.forEach(row => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
