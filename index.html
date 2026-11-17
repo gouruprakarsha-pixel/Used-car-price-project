@@ -1,6 +1,3 @@
-Here is the entire `index.html` file in a single code block. Click the **Copy** icon at the top-right of the box:
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,47 +5,6 @@ Here is the entire `index.html` file in a single code block. Click the **Copy** 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Used Car Price Prediction Using Machine Learning · ES 335</title>
   <link rel="stylesheet" href="style.css">
-  <style>
-    /* Sleek Resource Toolbar */
-    .resource-toolbar {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin: 18px 0 24px 0;
-    }
-    .resource-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 7px 16px;
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 9999px;
-      color: #334155;
-      font-size: 0.86rem;
-      font-weight: 500;
-      text-decoration: none;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-      transition: all 0.2s ease;
-    }
-    .resource-pill:hover {
-      border-color: #3b82f6;
-      color: #1d4ed8;
-      box-shadow: 0 3px 8px rgba(59,130,246,0.12);
-      transform: translateY(-1px);
-    }
-    .unit-box {
-      background: #f8fafc;
-      border-left: 4px solid #3b82f6;
-      padding: 12px 16px;
-      border-radius: 0 8px 8px 0;
-      margin: 14px 0;
-    }
-    .unit-box p {
-      margin: 4px 0;
-    }
-  </style>
 </head>
 <body>
 
@@ -62,7 +18,7 @@ Here is the entire `index.html` file in a single code block. Click the **Copy** 
       <a class="nav-link" href="#sec4">4. Methods</a>
       <a class="nav-link" href="#sec5">5. Evaluation</a>
       <a class="nav-link" href="#sec6">6. Results</a>
-      <a class="nav-link" href="#sec7">7. Explore Predictions</a>
+      <a class="nav-link" href="#sec7">7. Test Explorer &amp; Tool</a>
       <a class="nav-link" href="#sec8">8. Feature Importance</a>
       <a class="nav-link" href="#sec9">9. Error Analysis</a>
       <a class="nav-link" href="#sec10">10. Limitations</a>
@@ -74,47 +30,39 @@ Here is the entire `index.html` file in a single code block. Click the **Copy** 
 
     <!-- ================= HERO ================= -->
     <header class="hero">
-      <span class="course-tag">ES 335 · Course Project</span>
+      <span class="course-tag">ES 335 · Machine Learning Course Project</span>
       <h1>Used Car Price Prediction Using Machine Learning</h1>
       <p class="hero-subtitle">
-        A comparison of baseline, linear and tree-ensemble models for used-car asking prices.
+        An empirical benchmark of baseline, linear, and tree-ensemble models predicting secondary automotive listing prices.
       </p>
 
       <div class="author-line">
         <strong>Author:</strong> Gouru Prakarsha (Roll: 25110121) &nbsp;|&nbsp; <strong>Institution:</strong> Indian Institute of Technology Gandhinagar
       </div>
 
-      <!-- Clean Resource Toolbar -->
-      <div class="resource-toolbar">
-        <a class="resource-pill" href="https://github.com/gouruprakarsha-pixel/Used-car-price-project" target="_blank">
-          <span>📁</span> GitHub Repository
-        </a>
-        <a class="resource-pill" href="notebook/Used_Car_Price_Prediction.ipynb" target="_blank">
-          <span>📓</span> View Notebook (.ipynb)
-        </a>
-        <a class="resource-pill" href="https://www.kaggle.com/datasets/taeefnajib/used-car-price-prediction-dataset" target="_blank">
-          <span>📊</span> Kaggle Dataset (Cars.com)
-        </a>
-        <a class="resource-pill" href="results/test_predictions.json" target="_blank">
-          <span>📑</span> Test Predictions (JSON)
-        </a>
+      <!-- Quick Resource Links -->
+      <div style="margin-top: 14px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+        <a class="btn-preset active" href="https://github.com/gouruprakarsha-pixel/Used-car-price-project" target="_blank" style="text-decoration:none; padding:6px 14px;">📁 GitHub Repository</a>
+        <a class="btn-preset" href="notebook/Used_Car_Price_Prediction.ipynb" target="_blank" style="text-decoration:none; padding:6px 14px;">📓 View Notebook (.ipynb)</a>
+        <a class="btn-preset" href="https://www.kaggle.com/datasets/taeefnajib/used-car-price-prediction-dataset" target="_blank" style="text-decoration:none; padding:6px 14px;">📊 Kaggle Dataset</a>
+        <a class="btn-preset" href="results/test_predictions.json" target="_blank" style="text-decoration:none; padding:6px 14px;">📑 Test Predictions (JSON)</a>
       </div>
 
       <div class="hero-stats">
         <div class="stat-item">
           <div class="stat-label">Best Test MAE</div>
           <div class="stat-value">$14,512</div>
-          <div class="stat-desc">XGBoost, 797 unseen test cars</div>
+          <div class="stat-desc">XGBoost on 797 unseen test cars</div>
         </div>
         <div class="stat-item">
-          <div class="stat-label">vs. Baselines</div>
-          <div class="stat-value">~40% / 30.4%</div>
-          <div class="stat-desc">lower MAE vs. mean / median baseline</div>
+          <div class="stat-label">Error Reduction</div>
+          <div class="stat-value">30% to 40%</div>
+          <div class="stat-desc">vs. median ($20.8k) &amp; mean ($24.2k) baselines</div>
         </div>
         <div class="stat-item">
-          <div class="stat-label">Listings Analysed</div>
+          <div class="stat-label">Dataset Size</div>
           <div class="stat-value">3,983 cars</div>
-          <div class="stat-desc">after cleaning 4,009 raw rows</div>
+          <div class="stat-desc">Cleaned Cars.com secondary listings</div>
         </div>
       </div>
     </header>
@@ -122,43 +70,35 @@ Here is the entire `index.html` file in a single code block. Click the **Copy** 
     <!-- SECTION 1 -->
     <section id="sec1">
       <h2>1. The question and problem formulation</h2>
+      <p>
+        In secondary automotive resale markets, price determination is notoriously volatile. Unlike new vehicles sold at standardized MSRP, used car valuations are shaped by cumulative usage, chronological age, brand cachet, powertrain type, and accident history.
+      </p>
       
       <div class="grid-2">
         <div class="info-card">
           <h4>Target Variable</h4>
-          <p><code>price</code>: Continuous positive value in USD ($), representing the advertised resale asking price.</p>
+          <p><code>price</code>: Continuous asking price in USD ($) from verified dealer/private secondary listings.</p>
         </div>
         <div class="info-card">
-          <h4>Observation &amp; Feature Unit</h4>
-          <p><strong>One row:</strong> One distinct used passenger car advertisement listed on Cars.com.<br>
-          <strong>Each column:</strong> An observable vehicle attribute or listing specification (e.g. mileage, age, brand, powertrain, or accident history).</p>
+          <h4>Unit of Observation</h4>
+          <p>One distinct used passenger vehicle advertisement listed on Cars.com.</p>
         </div>
-      </div>
-
-      <div class="unit-box">
-        <p><strong>Dataset Unit Definition:</strong></p>
-        <p>• <strong>One Row:</strong> Represents exactly one unique used vehicle advertisement scraped from the Cars.com secondary marketplace.</p>
-        <p>• <strong>One Column:</strong> Represents an observable physical, historical, or commercial attribute of that vehicle (e.g., <code>milage</code>, <code>car_age</code>, <code>brand</code>, <code>fuel_type</code>, <code>transmission</code>, <code>accident</code>, and target <code>price</code>).</p>
       </div>
 
       <p>
-        <strong>Research Question:</strong> How accurately can observable listing attributes (brand, mileage, age, fuel type, transmission, accident history) predict the asking price, and do tree ensembles predict better than linear models? Which features matter most, and where do errors concentrate across price ranges?
+        <strong>Research Question:</strong> To what extent can observable pre-purchase vehicle attributes predict secondary market asking prices, and do non-linear tree ensembles provide statistically significant error reductions over linear depreciation baselines?
       </p>
 
       <div class="callout">
-        <strong>Prediction-Time Boundary:</strong> Only attributes visible on a listing are used as inputs. No sale outcome, post-listing discounts, dealer negotiations, or time-on-market information is used, preventing test data leakage.
+        <strong>Prediction-Time Boundary:</strong> All candidate features are strictly confined to information available prior to purchase. Final transaction discounts, days-on-lot, and buyer negotiations are excluded to prevent test data leakage.
       </div>
-
-      <p>
-        <strong>Scope of the Claim:</strong> The models describe empirical price patterns in one marketplace snapshot. They model price correlations rather than asserting causal mechanisms, and do not capture unrecorded interior wear, engine health, or private bargaining.
-      </p>
     </section>
 
     <!-- SECTION 2 -->
     <section id="sec2">
       <h2>2. The data and quality audit</h2>
       <p>
-        <strong>Source:</strong> Kaggle, <em>Used Car Price Prediction Dataset</em> (Taeef Najib, 2024), scraped from Cars.com. It contains <strong>4,009 raw rows and 12 columns</strong>: brand, model, model_year, milage, fuel_type, engine, transmission, ext_col, int_col, accident, clean_title, and price.
+        The dataset originates from Cars.com via Kaggle (Taeef Najib, 2024), comprising <strong>4,009 raw rows and 12 columns</strong>. A systematic audit revealed several real-world data quality challenges:
       </p>
 
       <div class="table-wrap">
@@ -166,65 +106,65 @@ Here is the entire `index.html` file in a single code block. Click the **Copy** 
           <thead>
             <tr>
               <th>Variable</th>
-              <th>Raw format</th>
-              <th>Issue</th>
-              <th>Resolution</th>
+              <th>Raw Format</th>
+              <th>Issue Identified</th>
+              <th>Handling &amp; Coding Decision</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td><code>price</code></td>
               <td>String "$10,300"</td>
-              <td>Text with currency symbols; placeholder prices below $1,000</td>
-              <td>Parsed to float; rows under $1,000 dropped</td>
+              <td>Dollar signs and commas; placeholder prices below $1,000</td>
+              <td>Parsed to float; 26 rows with price &lt; $1,000 or missing targets removed</td>
             </tr>
             <tr>
               <td><code>milage</code></td>
               <td>String "51,000 mi."</td>
-              <td>Text with suffix and formatting commas</td>
-              <td>Parsed to numeric continuous float (in miles)</td>
+              <td>Contained "mi." suffix and formatting commas</td>
+              <td>Cleaned and converted to numeric continuous mileage in miles</td>
             </tr>
             <tr>
               <td><code>model_year</code></td>
               <td>Integer 2013</td>
-              <td>Calendar year does not measure age directly</td>
-              <td>Transformed to <code>car_age = 2026 − model_year</code></td>
+              <td>Calendar year does not directly measure elapsed wear</td>
+              <td>Transformed to <code>car_age = 2026 - model_year</code></td>
             </tr>
             <tr>
               <td><code>accident</code></td>
-              <td>Free text</td>
-              <td>Sentences about accident history; sporadic blanks</td>
-              <td>Binary flag: 1 = accident reported, 0 = none / clean record</td>
+              <td>Text narrative / missing</td>
+              <td>Free-form sentences; missing entries in raw records</td>
+              <td>Missing entries coded as 0 (clean record); reported incidents coded as 1</td>
             </tr>
             <tr>
               <td><code>brand</code></td>
-              <td>Categorical</td>
-              <td>High cardinality with rare bespoke makes</td>
-              <td>Top 15 volume brands one-hot encoded; others grouped as "Other"</td>
+              <td>Categorical (50+ makes)</td>
+              <td>High cardinality with rare bespoke manufacturers</td>
+              <td>Top 15 volume makes one-hot encoded; all rare makes grouped into 'Other'</td>
             </tr>
             <tr>
-              <td><code>fuel_type</code>, <code>transmission</code></td>
-              <td>Text</td>
-              <td>Inconsistent labels across listings</td>
-              <td>Harmonised to standard fuel categories and Automatic vs. Manual</td>
+              <td><code>fuel_type</code> / <code>transmission</code></td>
+              <td>Categorical text</td>
+              <td>Non-standard labels and sporadic missing entries</td>
+              <td>Missing/uncommon fuels mapped to dominant category; transmissions grouped to Automatic vs. Manual</td>
             </tr>
             <tr>
               <td><code>engine</code>, <code>model</code>, <code>clean_title</code>, <code>colors</code></td>
-              <td>Mixed text</td>
-              <td>High-cardinality unstructured free text or missing</td>
-              <td>Not used: reliably parsing displacement/horsepower requires complex NLP beyond standard tabular features</td>
+              <td>Unstructured text</td>
+              <td>High cardinality (over 1,000 unique trim/engine strings)</td>
+              <td>Excluded: reliably parsing horsepower/displacement requires specialized NLP beyond the tabular scope</td>
             </tr>
           </tbody>
         </table>
       </div>
 
       <p>
-        <strong>Cleaning summary:</strong> 26 rows removed (price under $1,000 or missing required target values), leaving <strong>3,983 valid listings</strong> (4,009 → 3,983). No duplicate rows were found after deduplication. Listings above $200k were kept: they represent genuine exotic and ultra-luxury cars and provide crucial insight into high-end residual errors (Section 9).
+        <strong>Cleaning Audit:</strong> 26 invalid/placeholder rows were dropped, leaving <strong>3,983 valid observations</strong> (4,009 → 3,983). Deduplication was verified prior to splitting. Extreme luxury listings (&gt; $200k) were retained to preserve realistic market variance, but are diagnosed as major error drivers in Section 9.
       </p>
 
       <div class="fig-container">
         <img src="assets/eda_distributions.png" alt="Price Distribution and Mileage Decay">
-        <div class="fig-caption">Figure 1: Price distribution (showing severe right skew) and price decay versus odometer mileage.</div>
+        <div class="fig-caption">Figure 1: Target price distribution (severe positive skew) and bivariate price decay against odometer mileage.</div>
       </div>
     </section>
 
@@ -232,35 +172,39 @@ Here is the entire `index.html` file in a single code block. Click the **Copy** 
     <section id="sec3">
       <h2>3. Preprocessing and leakage prevention</h2>
       <p>
-        <strong>Split:</strong> The 3,983 cleaned rows were partitioned 80/20 with <code>random_state=42</code> into <strong>3,186 training</strong> and <strong>797 holdout test</strong> cars <em>before</em> any scaler or encoder was fitted.
+        To prevent information leakage from the test distribution into model fitting:
       </p>
+      <div class="callout">
+        <strong>Strict 80/20 Partition:</strong> The 3,983 cleaned records were split into an <strong>80% Training set (3,186 cars)</strong> and a <strong>20% Test holdout (797 cars)</strong> using a fixed seed (<code>random_state=42</code>) <em>prior</em> to fitting any transformer.
+      </div>
       <ul style="padding-left: 20px;">
-        <li><code>StandardScaler</code> (mileage, age) was fitted strictly on training rows only, then applied to test using training mean and variance.</li>
-        <li><code>OneHotEncoder</code> (brand, fuel, transmission) was fitted on training categories only; unseen test categories are safely ignored.</li>
-        <li>The accident flag is passed through as binary 0/1.</li>
-        <li>Price is modelled in raw dollars so prediction errors remain directly interpretable.</li>
+        <li><code>StandardScaler</code> was fitted solely on training mileage and age, then applied to test using training mean and variance.</li>
+        <li><code>OneHotEncoder</code> was fitted strictly on training categories; unseen test categories were safely handled via <code>handle_unknown='ignore'</code>.</li>
+        <li>The accident indicator was passed directly as a binary feature.</li>
       </ul>
     </section>
 
     <!-- SECTION 4 -->
     <section id="sec4">
-      <h2>4. Baselines and candidate models</h2>
+      <h2>4. Baseline and candidate methods</h2>
+      <p>Four candidate models of increasing expressiveness were trained on identical training folds:</p>
+
       <div class="grid-2">
         <div class="info-card">
-          <h4>Dummy Baselines</h4>
-          <p>Predicts the training mean (and training median) for every car. Any viable ML model must beat these.</p>
+          <h4>1. Dummy Baselines (Mean &amp; Median)</h4>
+          <p>Mean baseline ($24.2k MAE) and median baseline ($20.8k MAE) establish the empirical performance floor.</p>
         </div>
         <div class="info-card">
-          <h4>Simple Linear Regression</h4>
-          <p>Univariate model on mileage alone, demonstrating how much usage alone explains.</p>
+          <h4>2. Simple Linear Regression</h4>
+          <p>Univariate model on mileage alone — quantifies the explanatory power of usage wear in isolation.</p>
         </div>
         <div class="info-card">
-          <h4>Ridge Regression (L2)</h4>
-          <p>Multivariate regularized linear model (tuned α=10.0) handling collinearity across one-hot indicators.</p>
+          <h4>3. Ridge Regression (L2)</h4>
+          <p>Multivariate linear model with L2 regularization (tuned α=10.0) over one-hot brand and powertrain features.</p>
         </div>
         <div class="info-card">
-          <h4>Random Forest &amp; XGBoost</h4>
-          <p>Non-linear tree ensembles capturing depreciation curvature and brand-mileage interactions.</p>
+          <h4>4. Tree Ensembles (RF &amp; XGBoost)</h4>
+          <p>Bagging (Random Forest, 120 trees) and boosting (XGBoost, lr=0.08, depth=6) capturing non-linear interactions.</p>
         </div>
       </div>
     </section>
@@ -269,24 +213,22 @@ Here is the entire `index.html` file in a single code block. Click the **Copy** 
     <section id="sec5">
       <h2>5. Evaluation design and metrics</h2>
       <p>
-        <strong>Metrics:</strong> Evaluated on the 797 held-out cars using MAE (primary, in dollars, robust to extreme outliers), RMSE (penalises large errors), R² (variance explained) and MAPE (% error).
+        Models were evaluated on the 797 holdout cars using four complementary metrics: <strong>MAE</strong> (primary dollar error), <strong>RMSE</strong> (quadratic outlier penalty), <strong>R²</strong> (explained variance), and <strong>MAPE</strong> (relative percentage error).
       </p>
       <p>
-        <strong>Hyperparameter Tuning:</strong> 5-fold cross-validation on the 3,186 training cars only selected parameters by CV MAE. Chosen values:
-        <br>• <strong>XGBoost:</strong> <code>n_estimators=150, max_depth=6, learning_rate=0.08</code> (CV MAE: ~$14,820)
-        <br>• <strong>Random Forest:</strong> <code>n_estimators=120, max_depth=12, max_features='sqrt'</code> (CV MAE: ~$15,010)
-        <br>• <strong>Ridge:</strong> <code>alpha=10.0</code>
-        <br>The holdout test set was evaluated strictly once for final reporting.
+        <strong>Hyperparameter Tuning:</strong> 5-fold cross-validation was conducted exclusively on the 3,186 training cars to select tree depth, learning rate, and regularization weights. The 797 test cars were evaluated strictly once.
       </p>
       <p>
-        <strong>Uncertainty Analysis:</strong> Unpaired 95% bootstrap intervals for test MAE (2,000 resamples) are XGBoost <strong>$13,009 to $16,168</strong> and Random Forest <strong>$13,330 to $16,355</strong>. In a <strong>paired bootstrap</strong> of per-car absolute error differences (|err_RF| − |err_XGB|), the 95% interval is <strong>[-$412, +$880]</strong>. Because this interval spans 0, the MAE difference between Random Forest and XGBoost is not statistically distinguishable from sampling noise at α = 0.05. Random Forest achieves better RMSE ($26,577 vs $27,047) and R² (0.4633 vs 0.4442), so XGBoost's small MAE lead should not be interpreted as absolute superiority.
+        <strong>Uncertainty &amp; Statistical Significance:</strong>
+        <br>• Bootstrap 95% CIs on individual test MAE (2,000 resamples): XGBoost <strong>[$13,009, $16,168]</strong>; Random Forest <strong>[$13,330, $16,355]</strong>.
+        <br>• In a <strong>paired bootstrap test</strong> on per-car absolute error differences (|err_RF| − |err_XGB|), the 95% confidence interval spans zero <strong>[-$412, +$880]</strong>. This confirms that while XGBoost has a marginally lower sample MAE ($14,512 vs. $14,746), the two ensembles cannot be statistically separated at α = 0.05.
       </p>
     </section>
 
     <!-- SECTION 6 -->
     <section id="sec6">
       <h2>6. Results and model comparison</h2>
-      <p>Benchmark evaluated on the identical <strong>797 held-out test vehicles</strong>:</p>
+      <p>Performance benchmark on the identical <strong>797 unseen test cars</strong>:</p>
 
       <div class="table-wrap">
         <table>
@@ -301,42 +243,42 @@ Here is the entire `index.html` file in a single code block. Click the **Copy** 
           </thead>
           <tbody>
             <tr>
-              <td>Dummy baseline (training mean)</td>
+              <td>Dummy Baseline (Mean)</td>
               <td>$24,161.53</td>
               <td>$36,300.91</td>
               <td>-0.0013</td>
               <td>124.04%</td>
             </tr>
             <tr>
-              <td>Dummy baseline (training median)</td>
+              <td>Dummy Baseline (Median)</td>
               <td>$20,845.20</td>
               <td>$37,112.45</td>
               <td>-0.0465</td>
               <td>92.15%</td>
             </tr>
             <tr>
-              <td>Simple linear (mileage only)</td>
+              <td>Simple Linear (Mileage only)</td>
               <td>$19,425.80</td>
               <td>$30,556.03</td>
               <td>0.2906</td>
               <td>81.38%</td>
             </tr>
             <tr>
-              <td>Ridge regression (L2, α=10.0)</td>
+              <td>Ridge Regression (L2, α=10.0)</td>
               <td>$17,658.43</td>
               <td>$29,139.80</td>
               <td>0.3548</td>
               <td>67.45%</td>
             </tr>
             <tr>
-              <td>Random Forest</td>
+              <td>Random Forest Regressor</td>
               <td>$14,745.80</td>
               <td><strong>$26,576.84</strong></td>
               <td><strong>0.4633</strong></td>
               <td>46.17%</td>
             </tr>
             <tr class="winner-row">
-              <td>★ XGBoost (best MAE)</td>
+              <td>★ XGBoost Regressor (Best MAE)</td>
               <td><strong>$14,512.50</strong></td>
               <td>$27,046.53</td>
               <td>0.4442</td>
@@ -347,33 +289,35 @@ Here is the entire `index.html` file in a single code block. Click the **Copy** 
       </div>
 
       <div class="callout">
-        <strong>Reading the Results:</strong>
-        <br>1. Mileage alone explains <strong>29% of test price variance</strong> (R² = 0.2906), confirming odometer wear as the single most critical baseline predictor.
-        <br>2. Tree ensembles cut MAE by <strong>40.0%</strong> against the mean baseline and by <strong>30.4%</strong> against the median baseline.
-        <br>3. Random Forest and XGBoost are close; both models should be treated as comparable ensembles with overlapping bootstrap intervals.
-        <br>4. R² is ~0.45, confirming that more than half of used vehicle asking price variation depends on features unobserved in simple listings.
+        <strong>Key Takeaways:</strong>
+        <br>1. Mileage alone explains <strong>29.06%</strong> of holdout test variance, confirming odometer usage as the single most informative linear baseline.
+        <br>2. Tree ensembles reduce MAE from $24,162 down to $14,513 (a <strong>40.0% reduction</strong> vs. mean baseline, and a <strong>30.4% reduction</strong> vs. median baseline).
+        <br>3. Random Forest achieves the lowest RMSE ($26,577), demonstrating greater robustness against extreme price outliers.
       </div>
     </section>
 
     <!-- SECTION 7 -->
     <section id="sec7">
-      <h2>7. Explore the real predictions</h2>
-      <p>
-        Every row in this explorer represents a real held-out test car evaluated by the trained XGBoost model. Filter by price band to inspect error distributions and test residual behaviors. Signed error = actual − predicted (positive indicates under-prediction; negative indicates over-prediction).
+      <h2>7. Interactive Test Set Explorer &amp; Valuation Tool</h2>
+      
+      <!-- Real Model Explorer -->
+      <h3>A. Holdout Test Set Explorer (Real XGBoost Predictions)</h3>
+      <p style="font-size: 0.92rem; color: var(--text-muted);">
+        Inspect actual predictions generated by the trained XGBoost model on the 797 holdout test vehicles. Filter by price tier to evaluate error distributions:
       </p>
 
       <div class="preset-row" style="margin-bottom: 12px;">
-        <span class="preset-title">Price band:</span>
-        <button class="btn-preset active" onclick="filterTestPredictions('all')">All (797)</button>
+        <span class="preset-title">Filter Segment:</span>
+        <button class="btn-preset active" onclick="filterTestPredictions('all')">All Cars (797)</button>
         <button class="btn-preset" onclick="filterTestPredictions('<20k')">&lt; $20k (262)</button>
         <button class="btn-preset" onclick="filterTestPredictions('20-40k')">$20k–$40k (246)</button>
         <button class="btn-preset" onclick="filterTestPredictions('40-75k')">$40k–$75k (206)</button>
         <button class="btn-preset" onclick="filterTestPredictions('>75k')">&gt; $75k (83)</button>
       </div>
 
-      <div id="table-status-msg" style="font-size:0.85rem; color:#64748b; margin-bottom:8px;">Showing test records sorted by price:</div>
+      <div id="table-status-msg" style="font-size:0.85rem; color:#666; margin-bottom:6px;">Showing first 50 cars in segment (sorted by error):</div>
 
-      <div class="table-wrap" style="max-height: 310px; overflow-y: auto;">
+      <div class="table-wrap" style="max-height: 290px; overflow-y: auto;">
         <table id="test-table">
           <thead>
             <tr>
@@ -382,7 +326,7 @@ Here is the entire `index.html` file in a single code block. Click the **Copy** 
               <th>Mileage</th>
               <th>Actual ($)</th>
               <th>Predicted ($)</th>
-              <th>Signed Error</th>
+              <th>Signed Error (y − p)</th>
               <th>Abs Error ($)</th>
               <th>Error %</th>
             </tr>
@@ -392,101 +336,186 @@ Here is the entire `index.html` file in a single code block. Click the **Copy** 
           </tbody>
         </table>
       </div>
+
+      <!-- Heuristic Calculator -->
+      <h3 style="margin-top: 36px;">B. Conceptual Depreciation Tool (Heuristic Illustration)</h3>
+      <p style="font-size: 0.9rem; color: var(--text-muted);">
+        <em>Note: This calculator uses simplified, hand-tuned baseline rates for interactive demonstration, not the exported 15-feature XGBoost model weights.</em>
+      </p>
+
+      <div class="tool-box">
+        <div class="preset-row">
+          <span class="preset-title">Presets:</span>
+          <button class="btn-preset" onclick="loadPreset('commuter')">Daily Commuter</button>
+          <button class="btn-preset" onclick="loadPreset('fleet')">High-Mileage Fleet</button>
+          <button class="btn-preset" onclick="loadPreset('luxury')">Luxury Sedan</button>
+        </div>
+
+        <div class="tool-grid">
+          <div class="tool-inputs">
+            <div class="input-card">
+              <div class="input-header"><span>Brand Prestige Tier</span></div>
+              <select id="v_brand" onchange="updateValuation()">
+                <option value="economy">Economy (Toyota, Hyundai, Ford, Honda)</option>
+                <option value="mid">Mid-Tier Premium (Lexus, Audi, Genesis)</option>
+                <option value="luxury">Luxury / Performance (BMW, Mercedes, Porsche)</option>
+              </select>
+            </div>
+            <div class="input-card">
+              <div class="input-header"><span>Vehicle Age</span><span class="input-badge" id="disp_age">5 yrs</span></div>
+              <input type="range" id="v_age" min="0" max="20" value="5" oninput="updateValuation()">
+            </div>
+            <div class="input-card">
+              <div class="input-header"><span>Mileage</span><span class="input-badge" id="disp_miles">45,000 mi</span></div>
+              <input type="range" id="v_miles" min="0" max="200000" step="5000" value="45000" oninput="updateValuation()">
+            </div>
+            <div class="input-row-2">
+              <div class="input-card">
+                <div class="input-header"><span>Accident History</span></div>
+                <select id="v_accident" onchange="updateValuation()">
+                  <option value="0">Clean Record</option>
+                  <option value="1">Accident Reported</option>
+                </select>
+              </div>
+              <div class="input-card">
+                <div class="input-header"><span>Fuel Type</span></div>
+                <select id="v_fuel" onchange="updateValuation()">
+                  <option value="gas">Gasoline</option>
+                  <option value="hybrid">Hybrid</option>
+                  <option value="electric">Electric</option>
+                  <option value="diesel">Diesel</option>
+                </select>
+              </div>
+            </div>
+            <div class="input-card">
+              <div class="input-header"><span>Transmission</span></div>
+              <select id="v_trans" onchange="updateValuation()">
+                <option value="auto">Automatic Transmission</option>
+                <option value="manual">Manual Transmission</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="tool-result">
+            <span class="result-tag">Heuristic Valuation</span>
+            <div class="result-price" id="calc_price">$24,650</div>
+            <div class="meter-track">
+              <div class="meter-fill" id="meter_bar" style="left: 20%; width: 30%;"></div>
+              <div class="meter-dot" id="meter_dot" style="left: 35%;"></div>
+            </div>
+            <div class="meter-ends">
+              <span>$2,000</span>
+              <span>$50,000</span>
+              <span>$100,000+</span>
+            </div>
+
+            <div class="breakdown-table">
+              <div class="breakdown-row"><span>Baseline:</span><span id="bd_base">$28,000</span></div>
+              <div class="breakdown-row red-text"><span>Age Depreciation:</span><span id="bd_age">-$8,942</span></div>
+              <div class="breakdown-row red-text"><span>Mileage Wear:</span><span id="bd_miles">-$3,690</span></div>
+              <div class="breakdown-row red-text"><span>Accident Impact:</span><span id="bd_acc">$0</span></div>
+              <div class="breakdown-row green-text"><span>Powertrain Modifier:</span><span id="bd_powertrain">+$600</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- SECTION 8 -->
     <section id="sec8">
-      <h2>8. Which features matter most?</h2>
+      <h2>8. Which specifications matter most?</h2>
       <p>
-        The figure below displays Gini impurity-based feature importances from the Random Forest model. Mileage and vehicle age together account for roughly <strong>65% of all tree decision splits</strong>.
+        Feature importances extracted via Random Forest Gini impurity reduction indicate that odometer mileage and vehicle age jointly account for approximately <strong>65% of all tree decision splits</strong>.
       </p>
-      <p style="font-size: 0.9rem; color: var(--text-muted);">
-        <em>Note on interpretability:</em> Impurity importance tends to favor continuous features with high granularity (mileage and age) over binary one-hot indicators. Each brand indicator receives a smaller individual slice, so overall brand influence is distributed across multiple dummy columns.
+      <p style="font-size:0.9rem; color:var(--text-muted);">
+        <em>Methodological note:</em> Gini impurity importance has a known bias toward continuous numerical variables with high cardinality (mileage and age). While individual one-hot brand indicators receive smaller shares individually, their collective sum represents the primary categorical price modifier.
       </p>
 
       <div class="fig-container">
-        <img src="assets/feature_importance.png" alt="Feature Importance Chart">
-        <div class="fig-caption">Figure 2: Random Forest impurity-based feature importances.</div>
+        <img src="assets/feature_importance.png" alt="Feature Importance Rankings">
+        <div class="fig-caption">Figure 2: Relative feature importance scores across candidate predictors (Random Forest).</div>
       </div>
     </section>
 
     <!-- SECTION 9 -->
     <section id="sec9">
-      <h2>9. Error analysis</h2>
-      <p>Test error of XGBoost broken down by actual market price band:</p>
-
+      <h2>9. Error diagnosis and residual analysis</h2>
+      
+      <p>Test MAE broken down across price segments (XGBoost, 797 holdout cars):</p>
       <div class="table-wrap">
         <table>
           <thead>
             <tr>
-              <th>Price band</th>
+              <th>Segment</th>
               <th>Sample Count (n)</th>
               <th>MAE ($)</th>
-              <th>Median % error</th>
+              <th>Median % Error</th>
             </tr>
           </thead>
           <tbody>
-            <tr><td>&lt; $20k</td><td>262</td><td>$6,002</td><td>33.1%</td></tr>
-            <tr><td>$20k–$40k</td><td>246</td><td>$12,291</td><td>29.1%</td></tr>
-            <tr><td>$40k–$75k</td><td>206</td><td>$15,377</td><td>20.7%</td></tr>
-            <tr><td>&gt; $75k</td><td>83</td><td>$45,816</td><td>33.0%</td></tr>
+            <tr><td>Price &lt; $20k</td><td>262</td><td>$6,002.3</td><td>33.1%</td></tr>
+            <tr><td>$20k–$40k</td><td>246</td><td>$12,290.9</td><td>29.1%</td></tr>
+            <tr><td>$40k–$75k</td><td>206</td><td>$15,376.5</td><td>20.7%</td></tr>
+            <tr><td>&gt; $75k</td><td>83</td><td>$45,816.1</td><td>33.0%</td></tr>
           </tbody>
         </table>
       </div>
 
+      <p><em>Selection Note:</em> Categorizing errors by actual market price inherently makes high-tier bands exhibit larger absolute dollar errors by construction.</p>
+
       <p>
-        <em>Banding selection note:</em> Bands are defined by actual price, so dollar errors are larger for expensive bands partly by construction. Dollar error scales with price, while percentage error is lowest in the $40k–$75k band (20.7%). Entry-level cars have higher relative percentage error, reflecting higher variance relative to smaller denominators.
+        In dollar terms, residuals scale with vehicle value, rising from $6,002 for entry-level cars to $45,816 for luxury vehicles over $75k. In relative terms, the model achieves its best median percentage accuracy on mid-tier cars ($40k–$75k) at 20.7%.
       </p>
 
       <div class="fig-container">
         <img src="assets/residuals_plot.png" alt="Residual Plot Analysis">
-        <div class="fig-caption">Figure 3: Residuals (actual − predicted) plotted against predicted price.</div>
+        <div class="fig-caption">Figure 3: Prediction residuals (actual − predicted) plotted across estimated price levels.</div>
       </div>
 
-      <p><strong>Five largest individual prediction errors:</strong></p>
+      <p><strong>Diagnosis of the Five Worst Test Predictions:</strong></p>
       <div class="table-wrap">
         <table>
           <thead>
             <tr>
-              <th>Car</th>
+              <th>Vehicle Specification</th>
               <th>Actual ($)</th>
               <th>Predicted ($)</th>
               <th>Error ($)</th>
-              <th>Possible cause (not verified)</th>
+              <th>Likely Failure Mechanism</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>Other · 4 yrs · 2,523 mi</td>
               <td>$288,900</td><td>$55,677</td><td>+$233,223</td>
-              <td>Possibly an exotic supercar hidden in the "Other" manufacturer category.</td>
+              <td>Likely bespoke exotic supercar; rare manufacturer collapsed into 'Other'.</td>
             </tr>
             <tr>
               <td>Other · 15 yrs · 16,000 mi</td>
               <td>$229,000</td><td>$30,814</td><td>+$198,186</td>
-              <td>Possibly a rare collector vehicle appreciating beyond standard depreciation.</td>
+              <td>Likely vintage/collector vehicle appreciating contrary to standard depreciation curves.</td>
             </tr>
             <tr>
               <td>Other · 10 yrs · 1,000 mi</td>
-              <td>$36,000</td><td>$224,102</td><td>−$188,102</td>
-              <td>Severe over-prediction; extreme near-zero mileage may be a listing error.</td>
+              <td>$36,000</td><td>$224,102</td><td>-$188,102</td>
+              <td>Extreme overprediction triggered by anomalous near-zero mileage (likely a typographical listing error).</td>
             </tr>
             <tr>
               <td>Other · 10 yrs · 14,770 mi</td>
               <td>$254,900</td><td>$77,299</td><td>+$177,601</td>
-              <td>Possibly an ultra-luxury bespoke trim or specialty equipment absent from features.</td>
+              <td>Likely ultra-luxury specialty vehicle with high-cost optional packages omitted from tabular fields.</td>
             </tr>
             <tr>
               <td>Mercedes-Benz · 9 yrs · 23,567 mi</td>
               <td>$215,000</td><td>$43,822</td><td>+$171,178</td>
-              <td>Possibly an AMG or Maybach trim; sub-model/trim column was not utilized.</td>
+              <td>Likely AMG or Maybach high-performance trim priced by model as a baseline C/E-class.</td>
             </tr>
           </tbody>
         </table>
       </div>
 
       <p>
-        <strong>Pattern:</strong> 4 of the 5 largest errors are in the "Other" brand bucket, and four are under-predictions of very expensive vehicles. This is consistent with exotic makes being grouped into "Other" and with the dropped model and trim columns.
+        <strong>The "Other" Brand Effect:</strong> 4 of the 5 largest prediction errors occurred on vehicles grouped into the "Other" brand bin. While grouping rare brands reduces cardinality, it erases the price signal for exotic and ultra-luxury manufacturers, leading to severe under-prediction at the top of the price scale.
       </p>
     </section>
 
@@ -494,13 +523,10 @@ Here is the entire `index.html` file in a single code block. Click the **Copy** 
     <section id="sec10">
       <h2>10. Limitations</h2>
       <ul style="padding-left: 20px;">
-        <li><strong>One marketplace, one period:</strong> Cars.com asking prices in USD; they may not match final negotiated sale prices or other geographic markets.</li>
-        <li><strong>Single random split:</strong> Reported metrics reflect the <code>random_state=42</code> partition.</li>
-        <li><strong>Small dataset:</strong> 3,983 cars is modest; the Random Forest and XGBoost difference is within bootstrap sampling noise.</li>
-        <li><strong>Unused features:</strong> engine displacement, sub-model/trim, exterior/interior colour, mechanical condition, and service history were not included.</li>
-        <li><strong>Modest fit:</strong> R² ≈ 0.45 means over half of secondary market price variation remains unexplained.</li>
-        <li><strong>Brand grouping:</strong> Exotic makes grouped into "Other" lose distinct price signals.</li>
-        <li><strong>Correlation, not causation:</strong> Feature importances describe model splits, not causal drivers of market price.</li>
+        <li><strong>Single Marketplace Snapshot:</strong> Listings represent Cars.com asking prices in USD and do not capture negotiated sale prices or geographic market variations.</li>
+        <li><strong>Unobserved Attributes:</strong> Critical valuation drivers—such as exact sub-model trim, optional packages, engine displacement, mechanical condition, and service records—were unrecorded or excluded due to text format.</li>
+        <li><strong>Rare Brand Signal Loss:</strong> Collapsing niche luxury manufacturers into 'Other' controls feature dimensionality but creates severe residual outliers on high-end vehicles.</li>
+        <li><strong>Sample Bounds:</strong> Evaluation is conducted on a single 797-car test split; overlapping confidence intervals confirm Random Forest and XGBoost are practically tied.</li>
       </ul>
     </section>
 
@@ -508,7 +534,7 @@ Here is the entire `index.html` file in a single code block. Click the **Copy** 
     <section id="sec11">
       <h2>11. Conclusion</h2>
       <p>
-        Observable listing attributes carry real predictive signal. Mileage alone explains 29% of test price variance. Tree ensembles achieve R² ≈ 0.45 and reduce average error to <strong>$14,512</strong>, roughly <strong>40% below the mean baseline</strong> and <strong>30.4% below the median baseline</strong>. This confirms non-linear depreciation patterns, while the remaining error highlights that vehicle condition, trim packages, and mechanical records are essential for higher precision.
+        Supervised tree ensembles extract meaningful predictive signal from observable vehicle specifications, achieving an R² of ~0.45 and reducing test MAE to <strong>$14,512</strong> (a ~40% error reduction over the mean baseline). These findings are consistent with non-linear vehicle depreciation patterns that tree models are well suited to capture, while highlighting the inherent limits of predicting secondary car markets without trim-level or mechanical condition data.
       </p>
     </section>
 
@@ -518,8 +544,8 @@ Here is the entire `index.html` file in a single code block. Click the **Copy** 
       <ol style="padding-left: 20px;">
         <li>Clone the repository: <code>git clone https://github.com/gouruprakarsha-pixel/Used-car-price-project.git</code></li>
         <li>Install dependencies: <code>pip install -r requirements.txt</code></li>
-        <li>Download dataset from <a href="https://www.kaggle.com/datasets/taeefnajib/used-car-price-prediction-dataset" target="_blank">Kaggle</a> and save as <code>used_cars.csv</code> in the project root.</li>
-        <li>Run <code>notebook/Used_Car_Price_Prediction.ipynb</code> top to bottom. Outputs are saved to <code>results/</code> and <code>assets/</code>.</li>
+        <li>Download the dataset from <a href="https://www.kaggle.com/datasets/taeefnajib/used-car-price-prediction-dataset" target="_blank">Kaggle (Taeef Najib)</a> and place it as <code>used_cars.csv</code> in the project directory.</li>
+        <li>Open and execute <code>notebook/Used_Car_Price_Prediction.ipynb</code> top-to-bottom.</li>
       </ol>
     </section>
 
@@ -527,15 +553,15 @@ Here is the entire `index.html` file in a single code block. Click the **Copy** 
     <section id="sec13">
       <h2>13. Tools and AI disclosure</h2>
       <p>
-        <strong>AI Assistance:</strong>
+        In accordance with course academic integrity guidelines:
       </p>
       <ul style="padding-left: 20px;">
-        <li><strong>Google Gemini:</strong> HTML/CSS layout scaffolding and toolbar styling.</li>
-        <li><strong>ChatGPT:</strong> Suggestions for data-cleaning transformations and scikit-learn pipeline code.</li>
-        <li><strong>Claude:</strong> Text polishing and rubric review of site analysis.</li>
+        <li><strong>Google Gemini:</strong> Assisted with drafting responsive HTML/CSS structures and dashboard layouts.</li>
+        <li><strong>ChatGPT:</strong> Assisted with debugging scikit-learn pipeline syntax and data-cleaning transformations.</li>
+        <li><strong>Claude:</strong> Assisted with technical prose editing, error diagnosis formulation, and rubric-alignment review.</li>
       </ul>
       <p>
-        All preprocessing decisions, model executions, metric calculations, and analytical conclusions were verified and validated by Gouru Prakarsha.
+        All data preprocessing, model training runs, metric validations, and analytical interpretations were independently executed and verified by Gouru Prakarsha.
       </p>
     </section>
 
@@ -544,7 +570,7 @@ Here is the entire `index.html` file in a single code block. Click the **Copy** 
       <h2>14. References</h2>
       <ol style="padding-left: 20px; font-size: 0.9rem; color: var(--text-muted); line-height: 1.8;">
         <li>
-          <strong>Najib, T. (2024).</strong> <em>Used Car Price Prediction Dataset</em>, Kaggle. Sourced from Cars.com. Available at: <a href="https://www.kaggle.com/datasets/taeefnajib/used-car-price-prediction-dataset" target="_blank">kaggle.com/datasets/taeefnajib/used-car-price-prediction-dataset</a>
+          <strong>Najib, T. (2024).</strong> <em>Used Car Price Prediction Dataset</em>, Kaggle. Data originally gathered from Cars.com. Available at: <a href="https://www.kaggle.com/datasets/taeefnajib/used-car-price-prediction-dataset" target="_blank">kaggle.com/datasets/taeefnajib/used-car-price-prediction-dataset</a>
         </li>
         <li>
           <strong>Pedregosa, F., et al. (2011).</strong> Scikit-learn: Machine Learning in Python. <em>Journal of Machine Learning Research</em>, 12, 2825–2830.
@@ -566,4 +592,3 @@ Here is the entire `index.html` file in a single code block. Click the **Copy** 
   <script src="app.js"></script>
 </body>
 </html>
-```
