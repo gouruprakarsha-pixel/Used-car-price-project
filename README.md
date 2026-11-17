@@ -9,13 +9,12 @@
 ---
 
 ## 1. Project Overview & Scope
-This project formulates used car valuation as a continuous supervised regression task using secondary vehicle marketplace listings. It examines how observable pre-purchase vehicle attributes (brand prestige tier, odometer mileage, vehicle age, fuel type, transmission, and accident history) predict fair market prices under strict zero-leakage validation protocols.
+This project formulates used car valuation as a continuous supervised regression task on secondary vehicle marketplace listings. It examines how observable pre-purchase vehicle attributes (brand prestige tier, odometer mileage, vehicle age, fuel type, transmission, and accident history) predict fair market prices under strict validation protocols where all preprocessors are fitted on training data only.
 
-## 2. Dataset Access & Quality Checks
-- **Source:** [Taeef Najib: Used Car Price Prediction Dataset (Kaggle)](https://www.kaggle.com/datasets/taeefnajib/used-car-price-prediction-dataset)
-- **Unit of Observation:** A single used car advertisement listed on an online resale platform.
-- **Observations:** 4,009 raw records cleaned to 3,983 valid entries after string cleaning, removing currency symbols, mileage suffixes, and filtering non-viable target outliers ($< \$1,000$).
-- **Partition:** 80% Training set (3,186 samples) and 20% Holdout Test set (797 samples), split strictly *before* fitting preprocessors.
+## 2. Data Access
+1. Download `used_cars.csv` from [Taeef Najib: Used Car Price Prediction Dataset (Kaggle)](https://www.kaggle.com/datasets/taeefnajib/used-car-price-prediction-dataset) (subject to Kaggle's terms; listings originate from Cars.com). Accessed November 2026.
+2. Place it at `data/used_cars.csv` (not committed). Notebook expects this path.
+3. Cleaned dataset contains 3,983 valid observations (26 dropped due to prices < $1,000 or missing values).
 
 ## 3. Empirical Results Summary
 Evaluated on the identical 797 unseen holdout test vehicles:
@@ -28,43 +27,18 @@ Evaluated on the identical 797 unseen holdout test vehicles:
 | Random Forest Regressor | $14,745.80 | **$26,576.84** | **0.4633** | 46.17% |
 | **XGBoost Regressor (Best)** | **$14,512.50** | $27,046.53 | 0.4442 | **43.44%** |
 
-## 4. Setup & Reproduction Steps
-To reproduce all experiments, data processing, and figures:
+- **95% Bootstrap CI on Test MAE:** XGBoost [$13,009.41, $16,168.28] vs. Random Forest [$13,330.08, $16,355.04] (overlapping intervals).
 
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/gouruprakarsha-pixel/Used-car-price-project.git
-   cd Used-car-price-project
-   ```
+## 4. Reproducibility
+- **Split:** 80/20 train/test split, `random_state=42`, performed before any fitting.
+- **Tuning:** 5-fold cross-validation on 3,186 training cars only. Test set evaluated strictly once.
+- **Outputs saved in `results/`:** `test_predictions.json` (used by live site explorer).
+- **Environment:** Python 3.10+; pinned in `requirements.txt`.
 
-2. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+## 5. AI-Use Disclosure
+Generative AI assistance (Claude, ChatGPT, Gemini) was used for initial script scaffolding, HTML/CSS drafting, and editorial text polishing. Preprocessing, data splits, model training, and analytical interpretations were conceived, verified, and defended independently by the author.
 
-3. Run the complete training notebook:
-   Open and execute `notebook/Used_Car_Price_Prediction.ipynb` in Jupyter Notebook or Google Colab.
-
-## 5. Repository Structure
-```text
-Used-car-price-project/
-├── index.html              # Main live interactive website
-├── style.css               # Clean aesthetic cream/white styling
-├── app.js                  # Client-side valuation calculator & scale meter
-├── assets/
-│   ├── eda_distributions.png     # Exploratory distribution figures
-│   ├── feature_importance.png    # Top Gini split feature importances
-│   └── residuals_plot.png        # Test set residual error diagnosis
-├── notebook/
-│   └── Used_Car_Price_Prediction.ipynb   # Full reproducible pipeline
-├── requirements.txt        # Python dependency specifications
-└── README.md               # Reproduction steps and disclosures
-```
-
-## 6. AI-Use Disclosure
-In compliance with the course project guidelines, generative AI tools were used for initial script scaffolding, HTML/CSS layout drafting, and text polishing. All data cleaning strategies, feature engineering logic, validation partitioning, model training, and analytical interpretations were conceived, verified, and defended independently by the author.
-
-## 7. Citations & References
+## 6. Citations & References
 1. Najib, T. (2024). *Used Car Price Prediction Dataset*, Kaggle.
 2. Pedregosa, F., et al. (2011). Scikit-learn: Machine Learning in Python. *Journal of Machine Learning Research*, 12, 2825–2830.
 3. Chen, T., & Guestrin, C. (2016). XGBoost: A Scalable Tree Boosting System. In *Proceedings of the 22nd ACM SIGKDD International Conference* (pp. 785–794).

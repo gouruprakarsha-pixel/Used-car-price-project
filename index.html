@@ -33,7 +33,7 @@
       <span class="course-tag">ES 335 · Course Project</span>
       <h1>Used Car Price Prediction Using Machine Learning</h1>
       <p class="hero-subtitle">
-        An empirical analysis of non-linear vehicle depreciation curves, data cleaning safeguards, and ensemble pricing models on secondary marketplace listings.
+        An empirical comparison of baseline, linear and tree-ensemble models for used-car listing prices.
       </p>
 
       <div class="author-line">
@@ -44,7 +44,7 @@
         <div class="stat-item">
           <div class="stat-label">Average Test Error</div>
           <div class="stat-value">$14,512</div>
-          <div class="stat-desc">MAE on unseen holdout test vehicles</div>
+          <div class="stat-desc">MAE on 797 unseen test vehicles</div>
         </div>
         <div class="stat-item">
           <div class="stat-label">Model Improvement</div>
@@ -78,7 +78,7 @@
       </div>
 
       <p>
-        <strong>Core Research Question:</strong> Can observable pre-purchase vehicle attributes (brand tier, odometer mileage, model age, fuel type, transmission, and damage history) accurately predict market resale value, and do non-linear tree models significantly outperform linear depreciation baselines?
+        <strong>Core Research Question:</strong> Can observable pre-purchase vehicle attributes (brand tier, odometer mileage, model age, fuel type, transmission, and damage history) accurately predict market resale value, and do non-linear tree models substantially outperform linear depreciation baselines?
       </p>
 
       <div class="callout">
@@ -94,7 +94,7 @@
     <section id="sec2">
       <h2>2. The data and quality audit</h2>
       <p>
-        The dataset is sourced from Kaggle (Taeef Najib: Used Car Price Prediction Dataset), containing <strong>4,009 raw observations and 12 columns</strong>. A close inspection revealed several real-world data quality issues that had to be resolved before modeling:
+        The dataset is sourced from Kaggle (Taeef Najib: Used Car Price Prediction Dataset, originating from Cars.com), containing <strong>4,009 raw observations and 12 columns</strong>. A close inspection revealed several real-world data quality issues that had to be resolved before modeling:
       </p>
 
       <div class="table-wrap">
@@ -149,7 +149,7 @@
       </div>
 
       <p>
-        Filtering out invalid scrap listings produced a final clean set of <strong>3,983 valid observations</strong>.
+        <strong>Removal breakdown:</strong> 26 rows removed due to prices under $1,000 or missing values, leaving a verified clean set of <strong>3,983 valid observations</strong> (4,009 → 3,983).
       </p>
 
       <div class="fig-container">
@@ -202,20 +202,26 @@
           <p>Bagging (Random Forest) and gradient boosting (XGBoost) capable of capturing non-linear depreciation cliffs and brand interactions.</p>
         </div>
       </div>
+
+      <div class="callout">
+        <strong>Changes from the proposal:</strong> The baseline was implemented as the training <em>mean</em> (not median); single Decision Tree was dropped in favor of ensembles; raw engine text and specific <code>model</code> strings were excluded to prevent high-cardinality noise; and Gini impurity importance was used in place of SHAP for reliable client-side performance.
+      </div>
     </section>
 
     <!-- ================= SECTION 5: EVALUATION ================= -->
     <section id="sec5">
       <h2>5. Evaluation design and metrics</h2>
       <p>
-        Models were evaluated on the 797 holdout test cars using four complementary metrics:
+        Models were evaluated on the 797 holdout test cars using four complementary metrics: MAE (primary dollar error), RMSE (quadratic outlier penalty), R² (variance explained), and MAPE (% error).
       </p>
-      <ul style="padding-left: 20px;">
-        <li><strong>Mean Absolute Error (MAE):</strong> Primary metric. Measures average dollar discrepancy, which is easy for car buyers to interpret.</li>
-        <li><strong>Root Mean Squared Error (RMSE):</strong> Penalizes large pricing blunders heavily.</li>
-        <li><strong>R² Score:</strong> Measures the proportion of price variance explained relative to the mean baseline.</li>
-        <li><strong>MAPE (%):</strong> Measures relative percentage error across affordable and luxury vehicles.</li>
-      </ul>
+
+      <p>
+        <strong>Model selection and tuning:</strong> Hyperparameters were chosen with 5-fold cross-validation on the 3,186 training cars only. The 797 test cars were evaluated strictly once for final reporting. MAE is the deciding metric because it is directly measured in currency terms. XGBoost achieved the best MAE ($14,512.50) and MAPE (43.44%), while Random Forest achieved the best RMSE ($26,576.84) and R² (0.4633).
+      </p>
+
+      <p>
+        <strong>Uncertainty:</strong> 95% bootstrap confidence intervals for test MAE are <strong>$13,009.41 – $16,168.28</strong> for XGBoost and <strong>$13,330.08 – $16,355.04</strong> for Random Forest. Because these confidence intervals heavily overlap, the two ensembles are statistically tied on this holdout partition.
+      </p>
     </section>
 
     <!-- ================= SECTION 6: RESULTS ================= -->
@@ -287,7 +293,7 @@
     <section id="sec7">
       <h2>7. Try the model (Interactive tool)</h2>
       <p>
-        Use the interactive tool below to inspect how the learned model prices vehicles based on brand tier, age, odometer mileage, accident history, and powertrain options.
+        This calculator is a simplified <em>illustration</em> of the trends in the data, not the trained XGBoost model. Reported model performance is in Section 6.
       </p>
 
       <div class="tool-box">
@@ -365,7 +371,7 @@
           <div class="tool-result">
             <span class="result-tag">Estimated Market Price</span>
             <div class="result-price" id="calc_price">$26,400</div>
-            <div class="result-range" id="calc_range">90% Confidence Interval: $19,800 to $33,000</div>
+            <div class="result-range" id="calc_range">Typical residual error range (5th–95th percentile): -$28,985 to +$35,179</div>
 
             <div class="meter-track">
               <div class="meter-fill" id="meter_bar" style="left: 20%; width: 30%;"></div>
@@ -402,30 +408,81 @@
           </div>
         </div>
       </div>
+
+      <!-- Second Interaction: Interactive Holdout Test Predictions Explorer -->
+      <h3 style="margin-top: 28px;">Interactive Test Set Explorer</h3>
+      <p style="font-size: 0.9rem; color: var(--text-muted);">
+        Explore actual holdout test cars evaluated by the trained XGBoost model. Filter by market price band to inspect individual predictions:
+      </p>
+
+      <div class="preset-row" style="margin-bottom: 12px;">
+        <span class="preset-title">Filter Segment:</span>
+        <button class="btn-preset active" onclick="filterTestPredictions('all')">All Cars (797)</button>
+        <button class="btn-preset" onclick="filterTestPredictions('<20k')">&lt; $20k (262)</button>
+        <button class="btn-preset" onclick="filterTestPredictions('20-40k')">$20k–$40k (246)</button>
+        <button class="btn-preset" onclick="filterTestPredictions('40-75k')">$40k–$75k (206)</button>
+        <button class="btn-preset" onclick="filterTestPredictions('>75k')">&gt; $75k (83)</button>
+      </div>
+
+      <div class="table-wrap" style="max-height: 280px; overflow-y: auto;">
+        <table id="test-table">
+          <thead>
+            <tr>
+              <th>Brand</th>
+              <th>Age</th>
+              <th>Mileage</th>
+              <th>Actual Price ($)</th>
+              <th>XGBoost Pred ($)</th>
+              <th>Absolute Error ($)</th>
+              <th>Error %</th>
+            </tr>
+          </thead>
+          <tbody id="test-table-body">
+            <!-- Dynamically populated from test_predictions.json by app.js -->
+          </tbody>
+        </table>
+      </div>
     </section>
 
     <!-- ================= SECTION 8: FEATURE IMPORTANCE ================= -->
     <section id="sec8">
       <h2>8. Which specifications matter most?</h2>
       <p>
-        Feature importances extracted from the tree models show which variables drive the most decision splits:
+        Impurity-based importances from Random Forest; mileage and age together = 65% (check Figure 2).
       </p>
 
       <div class="fig-container">
         <img src="assets/feature_importance.png" alt="Feature Importance Chart">
-        <div class="fig-caption">Figure 2: Relative feature importances across the top predictors.</div>
-      </div>
-
-      <div class="callout">
-        <strong>Dominance of Mileage and Age:</strong> Odometer mileage and vehicle age together account for over <strong>65%</strong> of predictive splits. Brand tier serves as the primary base price shifter across vehicle segments.
+        <div class="fig-caption">Figure 2: Relative feature importances across top predictors.</div>
       </div>
     </section>
 
     <!-- ================= SECTION 9: ERROR ANALYSIS ================= -->
     <section id="sec9">
       <h2>9. Error diagnosis and residual analysis</h2>
+      
+      <p>Test MAE by segment (XGBoost):</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Segment</th>
+              <th>n</th>
+              <th>MAE ($)</th>
+              <th>Median % error</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Price &lt; $20k</td><td>262</td><td>$6,002.3</td><td>33.1%</td></tr>
+            <tr><td>$20–40k</td><td>246</td><td>$12,290.9</td><td>29.1%</td></tr>
+            <tr><td>$40–75k</td><td>206</td><td>$15,376.5</td><td>20.7%</td></tr>
+            <tr><td>&gt; $75k</td><td>83</td><td>$45,816.1</td><td>33.0%</td></tr>
+          </tbody>
+        </table>
+      </div>
+
       <p>
-        Examining where the model makes mistakes reveals clear real-world patterns:
+        In dollar terms, prediction errors scale directly with car price, growing from $6,002 on entry-level vehicles to $45,816 on cars exceeding $75,000. In percentage terms, the model performs best on mid-range vehicles ($40k–$75k) with a median error of only 20.7%, whereas cheaper cars show higher percentage volatility due to smaller baseline values.
       </p>
 
       <div class="fig-container">
@@ -433,20 +490,68 @@
         <div class="fig-caption">Figure 3: Residual errors plotted against predicted price.</div>
       </div>
 
-      <p><strong>Systematic Failure Modes:</strong></p>
-      <ul style="padding-left: 20px;">
-        <li><strong>High-End Heteroscedasticity:</strong> Errors widen on luxury vehicles above $75,000. Rare performance packages, premium audio, and custom interiors are unrecorded in the dataset, leading the model to underestimate luxury vehicle values.</li>
-        <li><strong>Vintage Inversion:</strong> The model assumes monotonic depreciation with age. However, enthusiast cars older than 20 years often appreciate in value due to collector demand.</li>
-      </ul>
+      <p><strong>Worst predictions:</strong></p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Car Details</th>
+              <th>Actual ($)</th>
+              <th>Predicted ($)</th>
+              <th>Error ($)</th>
+              <th>Diagnosis</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Other · 4 yrs · 2,523 mi</td>
+              <td>$288,900</td>
+              <td>$55,677</td>
+              <td>+$233,223</td>
+              <td>Exotic / bespoke supercar with rare trim package unrepresented in base features.</td>
+            </tr>
+            <tr>
+              <td>Other · 15 yrs · 16,000 mi</td>
+              <td>$229,000</td>
+              <td>$30,814</td>
+              <td>+$198,186</td>
+              <td>Low-mileage collector / vintage vehicle appreciating beyond standard depreciation.</td>
+            </tr>
+            <tr>
+              <td>Other · 10 yrs · 1,000 mi</td>
+              <td>$36,000</td>
+              <td>$224,102</td>
+              <td>-$188,102</td>
+              <td>Severe overprediction triggered by an extreme near-zero mileage outlier (1,000 mi).</td>
+            </tr>
+            <tr>
+              <td>Other · 10 yrs · 14,770 mi</td>
+              <td>$254,900</td>
+              <td>$77,299</td>
+              <td>+$177,601</td>
+              <td>Ultra-luxury niche performance model with unrecorded equipment packages.</td>
+            </tr>
+            <tr>
+              <td>Mercedes-Benz · 9 yrs · 23,567 mi</td>
+              <td>$215,000</td>
+              <td>$43,822</td>
+              <td>+$171,178</td>
+              <td>High-performance Mercedes-AMG / Maybach trim mispriced as standard series.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </section>
 
     <!-- ================= SECTION 10: LIMITATIONS ================= -->
     <section id="sec10">
       <h2>10. Limitations</h2>
       <ul style="padding-left: 20px;">
-        <li><strong>Unobserved Mechanical Health:</strong> Service history, regular oil changes, tire condition, and cosmetic scratches are not recorded in online listings.</li>
-        <li><strong>Geographic Differences:</strong> Regional climate differences (such as rust from winter road salt) affect vehicle condition but lack location coordinates in the data.</li>
-        <li><strong>Correlation vs. Causation:</strong> Predictions reflect observational marketplace patterns, not strict causal guarantees.</li>
+        <li><strong>One marketplace, one snapshot:</strong> Cars.com asking prices, not sale prices; may not reflect current prices or other markets.</li>
+        <li><strong>Modest explanatory power:</strong> R² ≈ 0.45 means over half of price variance is unexplained; the error is large on expensive cars.</li>
+        <li><strong>Features not used:</strong> engine, model/trim, colours, service history, condition, location.</li>
+        <li><strong>Small test set:</strong> 797 cars; differences between RF and XGBoost are within noise/CI.</li>
+        <li><strong>Correlation, not causation:</strong> feature importance describes the model, not what raises prices.</li>
       </ul>
     </section>
 
@@ -454,7 +559,7 @@
     <section id="sec11">
       <h2>11. Conclusion</h2>
       <p>
-        Supervised machine learning extracts strong pricing signals from observable vehicle specifications. While a simple linear model captures only 29% of price variance, non-linear tree models (Random Forest and XGBoost) achieve an R² of 0.463 and reduce average error to <strong>$14,512</strong>. This confirms that vehicle depreciation follows non-linear patterns that tree ensembles are well-suited to learn.
+        Supervised machine learning extracts substantial signal from observable vehicle specifications. While a simple linear model captures only 29% of price variance, non-linear tree models (Random Forest and XGBoost) achieve an R² of ~0.45 and reduce average error to <strong>$14,512</strong>. This confirms that vehicle depreciation follows non-linear dynamics that tree ensembles are well-suited to learn.
       </p>
     </section>
 
@@ -471,8 +576,9 @@
     <!-- ================= SECTION 13: AI DISCLOSURE ================= -->
     <section id="sec13">
       <h2>13. Tools and AI disclosure</h2>
-      <p><strong>Software Used:</strong> Python 3.10+, pandas, NumPy, scikit-learn, XGBoost, Matplotlib, Seaborn, HTML5, CSS3, vanilla JavaScript.</p>
-      <p><strong>AI Assistance:</strong> Generative AI tools were used for initial script scaffolding, HTML/CSS layout drafting, and text polishing. All data preprocessing, model evaluation, validation splits, and analytical interpretations were conceived and verified independently by the author.</p>
+      <p>
+        <strong>AI Assistance:</strong> Claude, ChatGPT, and Gemini were used for script scaffolding, HTML/CSS drafting, and text polishing. I ran and checked the preprocessing, splits, model results and interpretations myself.
+      </p>
     </section>
 
     <!-- ================= SECTION 14: REFERENCES ================= -->
